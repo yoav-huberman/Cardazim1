@@ -9,6 +9,7 @@ import struct
 
 
 def send_data(server_ip, server_port, data):
+    """sends data to the given server"""
     data = data.encode()
     message_size = struct.pack("<I", len(data))
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
