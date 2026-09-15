@@ -2,6 +2,7 @@ import argparse
 import sys
 import socket
 import struct
+from connection import Connection
 
 ###########################################################
 ####################### YOUR CODE #########################
@@ -10,12 +11,9 @@ import struct
 
 def send_data(server_ip, server_port, data):
     """sends data to the given server"""
-    data = data.encode()
-    message_size = struct.pack("<I", len(data))
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((server_ip, server_port))
-    sock.sendall(message_size)
-    sock.sendall(data)
+    with Connection.connect(server_ip, server_port) as connection:
+        data = data.encode()
+        connection.send_message(data)
 
 
 ###########################################################

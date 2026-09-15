@@ -4,34 +4,22 @@ import socket
 import struct
 import threading
 import time
+from listener import Listener
+from connection import Connection
 
 
-def handle(conn):
-    try:
-        size_data = conn.recv(4)  # get the meta data
-        if len(size_data) != 4:
-            return
-        message_size = struct.unpack("<I", size_data)[0]
-        data = b""
-        while len(data) < message_size:
-            chunk = conn.recv(message_size - len(data))
-            if not chunk:
-                return
-            data += chunk
-        message = data.decode()
-        print(message)
-    finally:
-        conn.close()
+def handle_connection(conn):
+    """handles a specific connection"""
+    with conn:
+        conn.receive_message()
 
 
 def run_server(ip, port):
-    """runs the server and prints the data it receive's"""
-    serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    serv.bind((ip, port))
-    serv.listen()
-    while True:
-        conn, adrr = serv.accept()
-        threading.Thread(target=handle, args=(conn,)).start()
+    """runs the server and does threading"""
+    with Listener(ip, port) as serv:
+        while True:
+            conn = serv.accept()
+            threading.Thread(target=handle_connection, args=(conn,)).start()
 
 
 def get_args():
