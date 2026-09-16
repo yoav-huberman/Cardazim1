@@ -24,8 +24,7 @@ class Connection:
             return
         message_size = struct.unpack("<I", size_data)[0]
         data = self.receive_this(message_size)
-        message = data.decode()
-        print(message)
+        return data
 
     def receive_this(self, size: int):
         """receives a message of given size"""

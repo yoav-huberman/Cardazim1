@@ -11,7 +11,9 @@ from connection import Connection
 def handle_connection(conn):
     """handles a specific connection"""
     with conn:
-        conn.receive_message()
+        data = conn.receive_message()
+        message = data.decode()
+        print(message)
 
 
 def run_server(ip, port):
