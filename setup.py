@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 from typing import List
 
 
-REQUIREMENTS_FILE = Path('.') / 'requirements.txt'
+REQUIREMENTS_FILE = Path(".") / "requirements.txt"
 
 
 def _read_requirements(file: Path) -> List[str]:
@@ -13,14 +13,14 @@ def _read_requirements(file: Path) -> List[str]:
 
 
 setup(
-    name='cardazim',
-    version='0.0.1',
-    author='Cardazim',
-    author_email='cardazim@protonmail.com',
-    description='A template for the cardazim project!',
-    long_description='''A basic template intended as a reference guide for the Cardazim Project!
+    name="cardazim",
+    version="0.0.1",
+    author="Cardazim",
+    author_email="cardazim@protonmail.com",
+    description="A template for the cardazim project!",
+    long_description="""A basic template intended as a reference guide for the Cardazim Project!
     Use wisely!
-    ''',
-    packages=find_packages('cardazim'),
-    install_requires=_read_requirements(REQUIREMENTS_FILE)
+    """,
+    packages=find_packages("cardazim"),
+    install_requires=_read_requirements(REQUIREMENTS_FILE),
 )
