@@ -18,6 +18,10 @@ class CryptImage:
     def show(self):
         self.image.save("debug_image.png")
 
+    def to_bytes(self):
+        self.image = self.image.convert("RGB")
+        return self.image.tobytes()
+
     @classmethod
     def create_from_path(cls, path: str | PathLike) -> CryptImage:
         image = Image.open(path)
@@ -26,6 +30,8 @@ class CryptImage:
 
     def encrypt(self, key: str):
         """encrypts the image attribute using the key"""
+        if self.key_hash:
+            raise Exception("do not encrypt twice")
         hash_obj = hashlib.sha256(key.encode())
         enc_key = hash_obj.digest()
         cipher = AES.new(enc_key, AES.MODE_EAX, nonce=b"arazim")

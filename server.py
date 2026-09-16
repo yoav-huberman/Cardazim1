@@ -6,14 +6,16 @@ import threading
 import time
 from listener import Listener
 from connection import Connection
+from card import Card
+from crypt_image import CryptImage
 
 
 def handle_connection(conn):
     """handles a specific connection"""
     with conn:
         data = conn.receive_message()
-        message = data.decode()
-        print(message)
+        card = Card.deserialize(data)
+        print("received", card)
 
 
 def run_server(ip, port):
