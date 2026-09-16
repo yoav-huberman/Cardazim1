@@ -14,8 +14,8 @@ class Connection:
     def send_message(self, message: bytes):
         """sends a message to the target of the connection in the given protocol"""
         message_size = struct.pack("<I", len(message))
-        self.sock.sendall(message_size)
-        self.sock.sendall(message)
+        self.connection.sendall(message_size)
+        self.connection.sendall(message)
 
     def receive_message(self):
         """receives a message in the given protocol"""
